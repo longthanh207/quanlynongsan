@@ -1,124 +1,40 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Truy xuất nguồn gốc</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; display: flex; flex-direction: column; align-items: center; padding: 50px 15px; margin: 0; }
-        
-        /* Logo QR */
-        .qr-logo { background-color: #e8f5e9; color: #00a65a; width: 70px; height: 70px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; margin-bottom: 15px; }
-        h1 { margin: 0; font-size: 26px; color: #111; text-align: center; }
-        .subtitle { color: #666; font-size: 14px; text-align: center; max-width: 350px; margin: 10px auto 30px; line-height: 1.5; }
-
-        /* Hộp tra cứu */
-        .search-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 450px; box-sizing: border-box; }
-        
-        .search-input-wrapper { position: relative; margin-bottom: 20px; }
-        .search-input-wrapper input { width: 100%; padding: 14px 15px 14px 40px; border: 1px solid #eee; background-color: #f8f9fa; border-radius: 8px; box-sizing: border-box; font-size: 15px; outline: none; }
-        .search-input-wrapper input:focus { border-color: #00a65a; background-color: #fff; }
-        .search-icon { position: absolute; left: 15px; top: 14px; color: #aaa; }
-
-        /* Buttons in Search Card */
-        .action-btns { display: flex; gap: 10px; }
-        .btn { flex: 1; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; border: 1px solid transparent; }
-        .btn-green { background-color: #00a65a; color: white; }
-        .btn-green:hover { background-color: #008f4d; }
-        .btn-white { background-color: white; color: #333; border-color: #ddd; }
-        .btn-white:hover { background-color: #f1f1f1; }
-
-        /* History */
-        .history-title { font-size: 13px; color: #999; margin: 25px 0 10px; display: flex; align-items: center; gap: 5px; }
-        .history-tag { display: inline-block; padding: 6px 12px; background-color: #f1f1f1; border-radius: 20px; font-size: 13px; color: #555; }
-
-        /* Back link */
-        .back-link { margin-top: 30px; color: #666; text-decoration: none; font-size: 14px; border-bottom: 1px solid #ccc; padding-bottom: 2px; }
-        .back-link:hover { color: #00a65a; border-color: #00a65a; }
-    </style>
+    <link rel="stylesheet" href="src/assets/css/search.css" />
 </head>
-<body>
-
-    <div class="qr-logo">🔲</div>
-    <h1>Truy xuất nguồn gốc</h1>
-    <p class="subtitle">Nhập mã định danh sản phẩm hoặc quét mã QR trên bao bì để xem thông tin chi tiết.</p>
+<body class="search-shell">
+    <div class="search-header">
+        <div class="search-logo" aria-hidden="true">🔲</div>
+        <h1 class="search-title">Truy xuất nguồn gốc</h1>
+        <p class="search-subtitle">Nhập mã định danh sản phẩm hoặc quét mã QR trên bao bì để xem thông tin chi tiết.</p>
+    </div>
 
     <div class="search-card">
         <div class="search-input-wrapper">
             <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="Nhập mã sản phẩm (VD: BAT-1234)">
+            <input class="input" type="text" id="searchInput" placeholder="Nhập mã sản phẩm (VD: BAT-1234)" />
         </div>
 
-        <div class="action-btns">
-            <button class="btn btn-green" onclick="handleSearch()">Tra cứu thông tin</button>
-            <button class="btn btn-white">📷 Quét mã QR</button>
+        <div class="action-btns" style="display:flex; gap:10px; margin-bottom: 6px;">
+            <button class="btn btn-primary btn-full" id="searchBtn" type="button">Tra cứu thông tin</button>
+            <button class="btn btn-secondary btn-full" type="button" aria-label="Tính năng đang phát triển">📷 Quét mã QR</button>
         </div>
 
-        <div class="history-title">🌱 Nông sản mới nhất từ hệ thống:</div>
-        <div id="public-product-list" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-            <div style="text-align: center; color: #999; font-size: 13px;">Đang tải dữ liệu...</div>
+        <div class="history">
+            <div class="history-title">🌱 Nông sản mới nhất từ hệ thống:</div>
+            <div id="public-product-list" class="public-products">
+                <div class="empty-state">Đang tải dữ liệu...</div>
+            </div>
+            <div class="chip">ID: BAT-1234 (Rau cải xanh)</div>
         </div>
-        <div class="history-tag">ID: BAT-1234 (Rau cải xanh)</div>
     </div>
 
     <a href="login.html" class="back-link">Quay lại trang đăng nhập</a>
 
-    <script>
-        function handleSearch() {
-            const batchId = document.getElementById('searchInput').value.trim();
-            
-            if(!batchId) {
-                alert("Vui lòng nhập mã sản phẩm!");
-                return;
-            }
-
-            // Lấy mã người dùng nhập và gắn vào đường link sang trang track.html
-            // Để trang track.html gọi API xuống Backend lấy đúng ảnh sản phẩm lên
-            window.location.href = `track.html?id=${batchId}`;
-        }
-        // ... (Giữ nguyên hàm handleSearch cũ của bạn) ...
-
-        // Hàm tự động gọi API lấy danh sách khi vừa mở trang Người tiêu dùng
-        async function loadPublicProducts() {
-            const listContainer = document.getElementById('public-product-list');
-            try {
-                const response = await fetch('http://localhost:5000/api/v1/products');
-                const result = await response.json();
-
-                if (response.ok && result.data.length > 0) {
-                    listContainer.innerHTML = ''; // Xóa chữ "Đang tải..."
-
-                    // Lặp qua từng sản phẩm và vẽ ra màn hình
-                    result.data.forEach(product => {
-                        const priceVND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price);
-                        
-                        // Tạo một thẻ hiển thị thông tin sản phẩm
-                        const itemHtml = `
-                            <div style="display: flex; align-items: center; padding: 10px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.2s;" 
-                                 onclick="window.location.href='track.html?id=${product.batchSerialNumber}'"
-                                 onmouseover="this.style.borderColor='#00a65a'" onmouseout="this.style.borderColor='#eee'">
-                                
-                                <img src="http://localhost:5000${product.productImageUrl}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px;">
-                                <div style="flex: 1; text-align: left;">
-                                    <div style="font-weight: bold; color: #333; font-size: 14px;">${product.name}</div>
-                                    <div style="color: #666; font-size: 12px;">Mã: ${product.batchSerialNumber}</div>
-                                </div>
-                                <div style="color: #00a65a; font-weight: bold; font-size: 14px;">${priceVND}/${product.unit}</div>
-                            </div>
-                        `;
-                        listContainer.innerHTML += itemHtml;
-                    });
-                } else {
-                    listContainer.innerHTML = '<div style="text-align: center; color: #999; font-size: 13px;">Chưa có sản phẩm nào.</div>';
-                }
-            } catch (error) {
-                console.error("Lỗi:", error);
-                listContainer.innerHTML = '<div style="text-align: center; color: red; font-size: 13px;">Lỗi tải dữ liệu.</div>';
-            }
-        }
-
-        // Chạy hàm này ngay khi trang web vừa load xong
-        loadPublicProducts();
-    </script>
+    <script src="src/pages/search.js"></script>
 </body>
 </html>
