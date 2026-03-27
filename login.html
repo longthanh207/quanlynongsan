@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Quản lý Nông sản</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; display: flex; justify-content: center; padding: 40px 15px; margin: 0; }
+        .login-container { max-width: 400px; width: 100%; text-align: center; }
+        
+        /* Logo & Header */
+        .logo-box { background-color: #e8f5e9; color: #00a65a; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; margin: 0 auto 15px; }
+        h1 { margin: 0; font-size: 28px; color: #111; }
+        .subtitle { color: #666; margin-bottom: 30px; font-size: 15px; }
+
+        /* Form Controls */
+        .form-group { text-align: left; margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 14px; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; outline: none; transition: 0.2s; }
+        .form-control:focus { border-color: #00a65a; }
+
+        /* Buttons */
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-green { background-color: #00a65a; color: white; }
+        .btn-green:hover { background-color: #008f4d; }
+        .btn-orange { background-color: #ff9800; color: white; margin-top: 15px; }
+        .btn-orange:hover { background-color: #e68a00; }
+
+        /* Divider */
+        hr { border: 0; border-top: 1px solid #eee; margin: 30px 0 20px; }
+        .text-divider { color: #666; font-size: 14px; margin-bottom: 10px; }
+
+        /* Quick Roles */
+        .role-grid { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn-outline { flex: 1; padding: 10px; background: transparent; border: 1px solid #ccc; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-outline.farmer { border-color: #00a65a; color: #00a65a; }
+        .btn-outline.censor { border-color: #007bff; color: #007bff; }
+        .btn-outline.admin { width: 100%; border-color: #9c27b0; color: #9c27b0; margin-bottom: 20px;}
+
+        .register-text { color: #666; font-size: 14px; }
+        .register-text span { color: #00a65a; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo-box">🍃</div>
+        <h1>Quản lý Nông sản</h1>
+        <p class="subtitle">Đăng nhập vào hệ thống</p>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" id="email" placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <input type="password" class="form-control" id="password" placeholder="••••••••">
+        </div>
+        
+        <button class="btn btn-green" onclick="handleLogin()">
+            <span>➔</span> Đăng nhập
+        </button>
+
+        <hr>
+
+        <p class="text-divider">Bạn là người tiêu dùng?</p>
+        <button class="btn btn-orange" onclick="goToSearch()">
+            <span>📥</span> Tra cứu nguồn gốc sản phẩm
+        </button>
+
+        <hr>
+
+        <p class="text-divider">Đăng nhập nhanh với vai trò:</p>
+        <div class="role-grid">
+            <button class="btn-outline farmer" onclick="document.getElementById('email').value='nongdan@test.com'">Nông dân</button>
+            <button class="btn-outline censor" onclick="document.getElementById('email').value='kiemduyet@test.com'">Kiểm duyệt</button>
+        </div>
+        <button class="btn-outline admin" onclick="document.getElementById('email').value='admin@test.com'">Quản trị viên</button>
+
+        <p class="register-text">Chưa có tài khoản? <a href="register.html" style="color: #00a65a; font-weight: bold; text-decoration: none;">Đăng ký ngay</a></p>
+    </div>
+
+    <script>
+        function handleLogin() {
+            // Chuyển hướng nông dân sang trang Dashboard (index.html)
+            window.location.href = 'index.html';
+        }
+
+        function goToSearch() {
+            // Chuyển hướng người tiêu dùng sang trang Nhập mã (search.html)
+            window.location.href = 'search.html';
+        }
+    </script>
+</body>
+</html>

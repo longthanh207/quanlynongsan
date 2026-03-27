@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Nông dân</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 20px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        
+        #result-box { margin-top: 30px; padding: 15px; border: 2px dashed #28a745; display: none; text-align: center;}
+        #qr-image { max-width: 200px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Thêm Lô Sản Phẩm Mới</h2>
+    
+    <form id="productForm">
+        <div class="form-group">
+            <label>Tên sản phẩm:</label>
+            <input type="text" name="name" required placeholder="VD: Cà chua bi">
+        </div>
+        <div class="form-group">
+            <label>Số lượng:</label>
+            <input type="number" name="quantity" required placeholder="VD: 100">
+        </div>
+        <div class="form-group">
+            <label>Đơn vị tính:</label>
+            <input type="text" name="unit" required placeholder="VD: kg">
+        </div>
+        <div class="form-group">
+            <label>Giá tiền (VNĐ):</label>
+            <input type="number" name="price" required placeholder="VD: 35000">
+        </div>
+        <div class="form-group">
+            <label>Hình ảnh sản phẩm:</label>
+            <input type="file" name="productImage" id="productImage" accept="image/*" required>
+        </div>
+        
+        <button type="submit">Tạo Lô Hàng & Sinh Mã QR</button>
+    </form>
+
+    <div id="result-box">
+        <h3 style="color: #28a745;">✅ Đã tạo lô hàng thành công!</h3>
+        <p>Mã lô hàng: <strong id="batch-id"></strong></p>
+        <p>Mã QR Truy xuất nguồn gốc:</p>
+        <img id="qr-image" src="" alt="QR Code">
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
