@@ -1,0 +1,13 @@
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+.register-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; margin: 20px;}
+.register-box .logo { background: #e8f5e9; color: #00a65a; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; margin: 0 auto 15px; }
+.register-box h2 { margin: 0 0 5px; color: #111; }
+.register-box p { color: #666; font-size: 14px; margin-bottom: 25px; }
+.form-group { text-align: left; margin-bottom: 15px; }
+.form-group label { font-size: 13px; font-weight: bold; color: #333; display: block; margin-bottom: 5px; }
+.register-box input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; outline: none; transition: 0.2s;}
+.register-box input:focus { border-color: #00a65a; }
+.btn-register { width: 100%; padding: 14px; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; color: white; transition: 0.2s; margin-top: 10px; background: #00a65a;}
+.btn-register:hover { background: #008f4d; }
+.footer-text { margin-top: 25px; font-size: 14px; color: #666;}
+.footer-text a { color: #00a65a; font-weight: bold; text-decoration: none;}

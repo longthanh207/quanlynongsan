@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+BackEnd/node_modules/
+FrontEnd/node_modules/
+
+# Environment files
+.env
+BackEnd/.env
+
+# Build outputs
+FrontEnd/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
